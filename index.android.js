@@ -10,46 +10,99 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
+import WordGame from './app/WordGame';
 
 export default class brainteaser extends Component {
+
+  constructor() {
+      super()
+      this.state = {
+        menu: true,
+        wordgame: false,
+
+      }
+   }
+
   render() {
     return (
-      <Image source={require('./images/background.jpg')} style={styles.container}>
-        <Text style={styles.welcome}>
-          BrainTeaser!
-        </Text>
-        <Text style={styles.button}>
-          We are the best at it
-        </Text>
-      </Image>
+       <Image source={require('./app/images/background.jpg')} style={styles.bg}>
+      {this.activityChange()}
+          
+        </Image>
     );
-  } 
+  }
+
+  activityChange()
+  {
+    if(this.state.menu)
+    {
+        return (   <View style={styles.menu}>
+        <Text style={styles.welcome}>
+          Welcome to BrainTeaser
+        </Text>
+         <TouchableOpacity style={styles.button} onPress={ () => this.wordGame()}>
+          <Text style={styles.buttonText}>Play</Text> 
+           </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={this._onPressButton}>
+          <Text style={styles.buttonText}>Achievements</Text> 
+           </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={this._onPressButton}>
+          <Text style={styles.buttonText}>Options</Text> 
+           </TouchableOpacity>
+           </View>)
+    }
+    else if(this.state.wordgame)
+    {
+      return (<WordGame />)
+    }
+  }
+
+  wordGame()
+  {
+    this.setState({
+      menu: false,
+      wordgame: true,
+    });
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+    bg: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     height: null,
     width: null,
+    position: 'relative',
+    resizeMode: 'cover',
   },
+
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    marginBottom: 25,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  menu:
+  {
+    backgroundColor: '#ecf0f1',
+    padding: 20,
   },
   button:
   {
-    color:'#FFFFFF'
+    backgroundColor: '#95a5a6',
+    width: 280,
+    padding: 10,
+    marginBottom: 10,
+  },
+  buttonText:
+  {
+    color: '#FFFFFF',
+    textAlign:  'center'
+
   },
 });
 
