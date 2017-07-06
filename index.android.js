@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -14,6 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import WordGame from './app/WordGame';
+import OrderNumbers from './app/OrderNumbers';
 
 export default class brainteaser extends Component {
 
@@ -22,6 +17,7 @@ export default class brainteaser extends Component {
       this.state = {
         menu: true,
         wordgame: false,
+        orderNumbers: false,
 
       }
    }
@@ -41,13 +37,13 @@ export default class brainteaser extends Component {
     {
         return (   <View style={styles.menu}>
         <Text style={styles.welcome}>
-          Welcome to BrainTeaser
+          Welcome to Brain Teaser
         </Text>
          <TouchableOpacity style={styles.button} onPress={ () => this.wordGame()}>
-          <Text style={styles.buttonText}>Play</Text> 
+          <Text style={styles.buttonText}>Play Word Game</Text> 
            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={this._onPressButton}>
-          <Text style={styles.buttonText}>Achievements</Text> 
+            <TouchableOpacity style={styles.button} onPress={() => this.orderNumbers()}>
+          <Text style={styles.buttonText}>Play Order Numbers</Text> 
            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={this._onPressButton}>
           <Text style={styles.buttonText}>Options</Text> 
@@ -58,6 +54,8 @@ export default class brainteaser extends Component {
     {
       return (<WordGame />)
     }
+    else if (this.state.orderNumbers)
+      return(<OrderNumbers />)
   }
 
   wordGame()
@@ -65,6 +63,16 @@ export default class brainteaser extends Component {
     this.setState({
       menu: false,
       wordgame: true,
+      orderNumbers: false,
+    });
+  }
+
+   orderNumbers()
+  {
+    this.setState({
+      menu: false,
+      wordgame: false,
+      orderNumbers: true,
     });
   }
 }
